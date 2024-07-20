@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guest Pass</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f4f8;
+            min-height: 100vh;
+            width: 100%;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: linear-gradient(135deg, #ffffff, #e6e9f0);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: left;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .id-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .id-card p {
+            margin: 10px 0;
+            font-size: 1rem;
+            color: #34495e;
+        }
+
+        .id-card p b {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .qr-code {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .qr-code img {
+            max-width: 200px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn {
+            background-color: #3498db;
+            color: #ffffff;
+            padding: 12px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            width: 100%;
+            font-size: 1rem;
+            margin-top: 15px;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        #file-name {
+            display: block;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 1rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        input[type="date"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccd1d9;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Guest Pass</h1>
+        <div class="file-upload">
+            <form action="{% url 'upload_image' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="visit_date">Date of Visit:</label>
+                    <input type="date" name="visit_date" id="visit_date" required>
+                </div>
+                <div class="form-group">
+                    <label for="duration">Duration of Visit (hours):</label>
+                    <input type="number" name="duration" id="duration" required>
+                </div>
+                <label class="btn">
+                    Select Image
+                    <input type="file" name="image" accept="image/*" id="image" onchange="displayFileName()">
+                </label>
+                <span id="file-name"></span>
+                <button type="submit" class="btn">Upload Image</button>
+            </form>
+        </div>
+        {% if name %}
+        <form action="{% url 'download_pdf' %}" method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="name" value="{{ name }}">
+            <input type="hidden" name="birth_date" value="{{ birth_date }}">
+            <input type="hidden" name="age" value="{{ age }}">
+            <input type="hidden" name="pan_number" value="{{ pan_number }}">
+            <input type="hidden" name="aadhaar_number" value="{{ aadhaar_number }}">
+            <input type="hidden" name="gender" value="{{ gender }}">
+            <input type="hidden" name="visit_date" value="{{ visit_date }}">
+            <input type="hidden" name="duration" value="{{ duration }}">
+            <button type="submit" class="btn">Generate PDF</button>
+        </form>
+        {% endif %}
+    </div>
+    <script>
+        function displayFileName() {
+            const input = document.getElementById('image');
+            const fileName = input.files[0] ? input.files[0].name : '';
+            document.getElementById('file-name').innerText = fileName;
+        }
+    </script>
+</body>
+
+</html>

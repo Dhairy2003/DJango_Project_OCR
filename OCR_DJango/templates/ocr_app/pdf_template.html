@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Visitor Pass</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            max-width: 400px;
+        }
+        .info strong {
+            flex-basis: 50%;
+            text-align: right;
+            padding-right: 10px;
+            font-weight: bold;
+        }
+        .info span {
+            flex-basis: 50%;
+            text-align: left;
+        }
+        .info-container {
+            margin: 0 auto;
+            max-width: 600px;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="info-container">
+        <h1>Visitor Pass</h1>
+        <div class="info">
+            <strong>Name:</strong>
+            <span>{{ name }}</span>
+        </div>
+        <br>
+        <div class="info">
+            <strong>Date of Birth:</strong>
+            <span>{{ birth_date }}</span>
+        </div>
+        <br>
+        <div class="info">
+            <strong>Gender:</strong>
+            <span>{{ gender }}</span>
+        </div>
+        <br>
+        <div class="info">
+            <strong>Age:</strong>
+            <span>{{ age }}</span>
+        </div>
+        <br>
+        {% if pan_number %}
+        <div class="info">
+            <strong>PAN Number:</strong>
+            <span>{{ pan_number }}</span>
+        </div>
+        <br>
+        {% endif %}
+        <!-- <div class="info">
+            <strong>Date of Visiting:</strong>
+            <span>{{ date_of_visiting }}</span>
+        </div>
+        <br>
+        <div class="info">
+            <strong>Duration of Visiting:</strong>
+            <span>{{ duration_of_visiting }}</span>
+        </div> -->
+        <!-- <br> -->
+        <div class="info">
+            <strong>Aadhaar Number:</strong>
+            <span>{{ aadhaar_number }}</span>
+        </div>
+        <br>
+    </div>
+</body>
+</html>
